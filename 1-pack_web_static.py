@@ -1,6 +1,9 @@
+#!/usr/bin/python3
+
 from fabric.api import local
 from datetime import datetime
 import os
+
 
 def do_pack():
     """
@@ -26,4 +29,3 @@ def do_pack():
         # Print an error message and return None if archive creation fails
         print("Error creating archive:", str(e))
         return None
-
