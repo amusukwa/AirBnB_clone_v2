@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Fabric script that distributes an archive to your web servers, using the function do_deploy
+Fabric script distributes an archive to your web servers, using do_deploy
 """
 
 from fabric.api import *
@@ -23,17 +23,17 @@ def do_deploy(archive_path):
         # Upload archive to /tmp/ directory on the web server
         put(archive_path, '/tmp/')
 
-        # Uncompress archive to /data/web_static/releases/<archive filename without extension>
+        # Uncompress archive
         run('mkdir -p /data/web_static/releases/{}'.format(archive_no_ext))
         run('tar -xzf /tmp/{} -C /data/web_static/releases/{}/'.format(archive_name, archive_no_ext))
 
         # Delete the archive from the web server
         run('rm /tmp/{}'.format(archive_name))
 
-        # Delete the symbolic link /data/web_static/current on the web server
+        # Delete the symbolic link /data/web_static/current on the server
         run('rm -rf /data/web_static/current')
 
-        # Create a new symbolic link /data/web_static/current linked to the new version
+        # Create a new symbolic link /data/web_static/current
         run('ln -s /data/web_static/releases/{}/ /data/web_static/current'.format(archive_no_ext))
 
         print("New version deployed!")
@@ -43,4 +43,3 @@ def do_deploy(archive_path):
     except Exception as e:
         print(e)
         return False
-
