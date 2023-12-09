@@ -18,6 +18,7 @@ def do_deploy(archive_path):
 
     try:
         archive_name = archive_path.split('/')[-1]
+        print(f"Archive name: {archive_name}")
         archive_no_ext = archive_name.split('.')[0]
 
         # Upload archive to /tmp/ directory on the web server
