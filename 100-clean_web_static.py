@@ -1,68 +1,43 @@
 #!/usr/bin/env python3
 """
-Fabric script creates and distributes an archive to web servers using deploy
+Fabric script deletes out-of-date archives using do_clean
 """
 
-from fabric.api import local, put, run, env
+from fabric.api import local, run, env, cd
+from datetime import datetime
 from os.path import exists
 
 env.hosts = ['<IP web-01>', '<IP web-02>']
+
+
+def do_clean(number=0):
+    """
+    Delete unnecessary archives from versions and web_static/releases folders
+    """
+    number = int(number)
+    if number < 0:
+        return
+
+    try:
+        # Delete unnecessary archives in versions folder
+        local("cd versions && ls -t | tail -n +{} | xargs rm -rf".format(number + 1))
+
+        # Delete unnecessary archives in web_static/releases folder on both web servers
+        for server in env.hosts:
+            with cd('/data/web_static/releases'):
+                releases = run('ls -lt --time=atime').split()
+                releases_to_delete = releases[number * 2::2]
+                for release in releases_to_delete:
+                    run('rm -rf {}'.format(release))
+
+        print("Cleaned up old versions!")
+
+    except Exception as e:
+        print(e)
 
 
 def do_pack():
     """
     Create a .tgz archive of the web_static folder
     """
-    local("mkdir -p versions")
-    now = datetime.now()
-    timestamp = now.strftime("%Y%m%d%H%M%S")
-    archive_path = "versions/web_static_{}.tgz".format(timestamp)
-    local("tar -czvf {} web_static".format(archive_path))
-    return archive_path
-
-
-def do_deploy(archive_path):
-    """
-    Distribute an archive to web servers
-    """
-    if not exists(archive_path):
-        return False
-
-    try:
-        archive_name = archive_path.split('/')[-1]
-        archive_no_ext = archive_name.split('.')[0]
-
-        # Upload archive to /tmp/ directory on the web servers
-        put(archive_path, '/tmp/')
-
-        # Uncompress archive
-        run('mkdir -p /data/web_static/releases/{}'.format(archive_no_ext))
-        run('tar -xzf /tmp/{} -C /data/web_static/releases/{}/'.format(archive_name, archive_no_ext))
-
-        # Delete the archive from the web servers
-        run('rm /tmp/{}'.format(archive_name))
-
-        # Delete the symbolic link /data/web_static/current from the web servers
-        run('rm -rf /data/web_static/current')
-
-        # Create a new symbolic link /data/web_static/current
-        run('ln -s /data/web_static/releases/{}/ /data/web_static/current'.format(archive_no_ext))
-
-        print("New version deployed!")
-
-        return True
-
-    except Exception as e:
-        print(e)
-        return False
-
-
-def deploy():
-    """
-    Deploy a new version by calling do_pack and do_deploy
-    """
-    archive_path = do_pack()
-    if not archive_path:
-        return False
-
-    return do_deploy(archive_path)
+    local
