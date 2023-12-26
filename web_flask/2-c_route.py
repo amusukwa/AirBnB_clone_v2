@@ -3,6 +3,8 @@ from flask import Flask
 
 app = Flask(__name__)
 
+# Route for the home page
+@app.route('/', strict_slashes=False)
 def home():
     """
     Route handler for the home page.
@@ -12,6 +14,8 @@ def home():
     """
     return 'Hello HBNB!'
 
+# Route for /hbnb
+@app.route('/hbnb', strict_slashes=False)
 def hbnb():
     """
     Route handler for /hbnb.
@@ -21,6 +25,8 @@ def hbnb():
     """
     return 'HBNB'
 
+# Route for /c/<text>
+@app.route('/c/<text>', strict_slashes=False)
 def c_route(text):
     """
     Route handler for /c/<text>.
@@ -36,3 +42,4 @@ def c_route(text):
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
+
