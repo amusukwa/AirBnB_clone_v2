@@ -12,9 +12,20 @@ app = Flask(__name__)
 def home():
     """
     Route for the home page.
-    Displays 'Hello HBNB!'
+    Returns:
+        str: A greeting message.
     """
     return 'Hello HBNB!'
+
+
+@app.route('/hbnb', strict_slashes=False)
+def hbnb():
+    """
+    Route for /hbnb.
+    Returns:
+        str: A message indicating HBNB.
+    """
+    return 'HBNB'
 
 
 if __name__ == '__main__':
