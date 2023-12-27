@@ -7,6 +7,7 @@ from flask import Flask
 
 app = Flask(__name__)
 
+
 @app.route('/', strict_slashes=False)
 def home():
     """
@@ -38,22 +39,17 @@ def c_route(text):
         text (str): The text variable.
 
     Returns:
-        str: Message displaying "C " followed by the value of the text variable.
+        str:displays "C " followed by the value of the text variable.
     """
     text = text.replace('_', ' ')
     return 'C {}'.format(text)
+
 
 @app.route('/python/', defaults={'text': 'is cool'}, strict_slashes=False)
 @app.route('/python/<text>', strict_slashes=False)
 def python_route(text):
     """
-    Route handler for /python/<text> with a default value of "is cool".
-
-    Args:
-        text (str): The text variable.
-
-    Returns:
-        str: Message displaying "Python " followed by the value of the text variable.
+    Route handler for /python/<text> with a default value of "is cool"
     """
     text = text.replace('_', ' ')
     return 'Python {}'.format(text)
@@ -62,7 +58,7 @@ def python_route(text):
 @app.route('/number/<int:n>', strict_slashes=False)
 def number_route(n):
     """
-    Route handler for /number/<n> to display "n is a number" only if n is an integer.
+    Route handler for /number/<n> to display "n is a number" only if n is integer.
 
     Args:
         n (int): The number.
