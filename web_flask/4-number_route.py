@@ -58,7 +58,7 @@ def python_route(text):
 @app.route('/number/<int:n>', strict_slashes=False)
 def number_route(n):
     """
-    Route handler for /number/<n> to display "n is a number" only if n is integer.
+    Route for /number/<n> to display "n is a number" only if n is integer.
 
     Args:
         n (int): The number.
