@@ -39,7 +39,7 @@ def c_route(text):
         text (str): The text variable.
 
     Returns:
-        str: displays "C " followed by the value of the text variable.
+        str: displaying "C " followed by value of the text variable.
     """
     text = text.replace('_', ' ')
     return 'C {}'.format(text)
@@ -55,7 +55,7 @@ def python_route(text):
         text (str): The text variable.
 
     Returns:
-        str: displays "Python " followed by the value of the text variable.
+        str: displaying "Python " followed by the value of text variable.
     """
     text = text.replace('_', ' ')
     return 'Python {}'.format(text)
@@ -78,7 +78,7 @@ def number_route(n):
 @app.route('/number_template/<int:n>', strict_slashes=False)
 def number_template_route(n):
     """
-    Route for /number_template/<n>displaying a page with H1 tag.
+    Route handler for /number_template/<n> to display an HTML page with an H1 tag.
 
     Args:
         n (int): The number.
@@ -93,7 +93,7 @@ def number_template_route(n):
 @app.route('/number_odd_or_even/<int:n>', strict_slashes=False)
 def number_odd_or_even_route(n):
     """
-    Route for /number_odd_or_even/<n> to display an HTML page indicating even or odd.
+    Route for /number_odd_or_even/<n> to display a page indicating even or odd.
 
     Args:
         n (int): The number.
