@@ -64,7 +64,7 @@ def python_route(text):
 @app.route('/number/<int:n>', strict_slashes=False)
 def number_route(n):
     """
-    Route handler for /number/<n> to display "n is a number" only if n is an integer.
+    Route for /number/<n> to display "n is a number" only if n is an integer.
 
     Args:
         n (int): The number.
@@ -78,7 +78,7 @@ def number_route(n):
 @app.route('/number_template/<int:n>', strict_slashes=False)
 def number_template_route(n):
     """
-    Route handler for /number_template/<n> to display an HTML page with an H1 tag.
+    Route for /number_template/<n> to display a page with H1 tag.
 
     Args:
         n (int): The number.
