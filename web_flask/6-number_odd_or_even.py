@@ -90,19 +90,15 @@ def number_template_route(n):
         return render_template('5-number.html', number=n)
 
 
-@app.route('/number_odd_or_even/<int:n>', strict_slashes=False)
-def number_odd_or_even_route(n):
-    """
-    Route for /number_odd_or_even/<n> to display page  indicating even or odd.
+@app.route("/number_odd_or_even/<int:n>", strict_slashes=False)
+def number_odd_or_even(n):
+    """Displays an HTML page only if <n> is an integer.
 
-    Args:
-        n (int): The number.
-
-    Returns:
-        str: Rendered HTML template.
+    States whether <n> is odd or even in the body.
     """
     if isinstance(n, int):
-        return render_template('6-number_odd_or_even.html', number=n, parity='even' if n % 2 == 0 else 'odd')
+        parity = 'even' if n % 2 == 0 else 'odd'
+        return render_template('6-number_odd_or_even.html', number=n, parity=parity)
 
 
 if __name__ == '__main__':
