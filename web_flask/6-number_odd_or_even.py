@@ -97,8 +97,9 @@ def number_odd_or_even(n):
     States whether <n> is odd or even in the body.
     """
     if isinstance(n, int):
-        parity = 'even' if n % 2 == 0 else 'odd'
-        return render_template('6-number_odd_or_even.html', number=n, parity=parity)
+        template_name = '6-number_odd_or_even.html'
+        context = {'number': n, 'parity': parity}
+        return render_template(template_name, **context)
 
 
 if __name__ == '__main__':
