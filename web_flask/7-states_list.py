@@ -7,6 +7,7 @@ Routes:
 """
 from models import storage
 from flask import Flask
+from models.state import State
 from flask import render_template
 
 app = Flask(__name__)
@@ -18,8 +19,7 @@ def states_list():
 
     States are sorted by name.
     """
-    states = storage.all("State")
-    print("Retrieved States:", states)
+    states = storage.all(State)
     return render_template("7-states_list.html", states=states)
 
 
@@ -30,4 +30,4 @@ def teardown(exc):
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0",debug=True)
+    app.run(host="0.0.0.0", debug=True)
